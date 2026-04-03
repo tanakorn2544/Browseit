@@ -2,8 +2,8 @@
 
 bl_info = {
     "name": "BrowseIt",
-    "author": "User",
-    "version": (1, 0, 0),
+    "author": "Korn Sensei",
+    "version": (1, 0, 1),
     "blender": (4, 0, 0),
     "location": "3D Viewport > Alt+Q (Pie) | Alt+Shift+Q (Search)",
     "description": "Pie menu to quickly jump to favorite N-Panel addon tabs, plus search.",
@@ -114,11 +114,53 @@ class BROWSEIT_OT_search_tab(Operator):
     def execute(self, context):
         if self.tab_result and self.tab_result != "NONE":
             bpy.ops.browseit.goto_tab(tab_name=self.tab_result)
+            # Offer to add the tab to a pie menu slot
+            bpy.ops.browseit.pick_slot('INVOKE_DEFAULT', tab_name=self.tab_result)
         return {'FINISHED'}
 
     def invoke(self, context, event):
         context.window_manager.invoke_search_popup(self)
         return {'CANCELLED'}
+
+
+# ── Operator: assign tab to pie slot ───────────────────────────────────────
+
+class BROWSEIT_OT_pick_slot(Operator):
+    bl_idname = "browseit.pick_slot"
+    bl_label = "Add to Pie Menu"
+    bl_description = "Assign the selected tab to a pie menu slot"
+    bl_options = {'INTERNAL'}
+
+    tab_name: StringProperty(name="Tab", default="")  # type: ignore
+
+    slot: EnumProperty(
+        name="Slot",
+        items=[
+            ('1', "Slot 1 — West",  ""),
+            ('2', "Slot 2 — East",  ""),
+            ('3', "Slot 3 — South", ""),
+            ('4', "Slot 4 — North", ""),
+            ('5', "Slot 5 — NW",    ""),
+            ('6', "Slot 6 — NE",    ""),
+            ('7', "Slot 7 — SW",    ""),
+            ('8', "Slot 8 — SE",    ""),
+        ],
+    )  # type: ignore
+
+    def invoke(self, context, event):
+        return context.window_manager.invoke_props_dialog(self, width=260)
+
+    def draw(self, context):
+        layout = self.layout
+        layout.label(text=f"Add  '{self.tab_name}'  to pie menu?", icon='SOLO_ON')
+        layout.separator(factor=0.4)
+        layout.prop(self, "slot")
+
+    def execute(self, context):
+        prefs = get_prefs()
+        setattr(prefs, f"slot_{self.slot}", self.tab_name)
+        self.report({'INFO'}, f"'{self.tab_name}' → Slot {self.slot}")
+        return {'FINISHED'}
 
 
 # ── Pie Menu ───────────────────────────────────────────────────────────────
@@ -204,6 +246,7 @@ class BrowseItPreferences(AddonPreferences):
 classes = (
     BrowseItPreferences,
     BROWSEIT_OT_goto_tab,
+    BROWSEIT_OT_pick_slot,
     BROWSEIT_OT_search_tab,
     BROWSEIT_MT_pie,
     BROWSEIT_MT_header,
