@@ -4,7 +4,7 @@ A Blender addon that lets you quickly navigate to your favorite N-Panel tabs via
 
 ![Blender](https://img.shields.io/badge/Blender-4.0%2B-orange?logo=blender&logoColor=white)
 ![License](https://img.shields.io/badge/License-GPL--3.0--or--later-blue)
-![Version](https://img.shields.io/badge/Version-1.0.0-green)
+![Version](https://img.shields.io/badge/Version-1.0.2-green)
 
 ---
 
@@ -14,11 +14,15 @@ A Blender addon that lets you quickly navigate to your favorite N-Panel tabs via
 |---|---|---|
 | **Favorites Pie Menu** | `Alt + Q` | Instantly jump to any of 8 assigned N-Panel tabs |
 | **Search All Tabs** | `Alt + Shift + Q` | Fuzzy-search through every registered N-Panel tab |
+| **Search & Add to Pie** | `Alt + Ctrl + Q` | Search for a tab and assign it to a pie slot |
+| **Reassign Slot** | `Ctrl + Click` (pie) | Ctrl+Click any pie slot to reassign it via search |
 | **Slot Assignment** | *Addon Preferences* | Assign any N-Panel tab to one of 8 directional pie slots |
 
 - 🔍 **Smart Detection** — Automatically discovers all N-Panel tabs from installed addons
 - ⚡ **One-Key Access** — Open sidebar and switch tabs in a single shortcut
 - 🎯 **8 Pie Slots** — Map your most-used tabs to directional positions (N, S, E, W, NE, NW, SE, SW)
+- 🔄 **Quick Reassign** — Ctrl+Click any pie slot to swap it, or click an empty slot to assign
+- 📋 **Assignment Overview** — Slot picker dialog shows all current assignments at a glance
 
 ---
 
@@ -44,9 +48,17 @@ A Blender addon that lets you quickly navigate to your favorite N-Panel tabs via
 
 Press **Alt + Q** in the 3D Viewport to open the pie menu. Each of the 8 slots can be mapped to a different N-Panel tab in the addon preferences.
 
+- **Click** a slot → jump to that N-Panel tab
+- **Ctrl + Click** a slot → search popup to reassign that slot
+- **Click an empty slot** → search popup to assign a tab to it
+
 ### Search (`Alt + Shift + Q`)
 
 Press **Alt + Shift + Q** to open a search popup. Start typing to filter through all available N-Panel tabs, then select one to jump directly to it.
+
+### Search & Add to Pie (`Alt + Ctrl + Q`)
+
+Press **Alt + Ctrl + Q** to search for a tab and assign it to a pie slot. The slot picker dialog shows all current assignments so you can see which slots are taken and which are empty.
 
 ### Configuring Slots
 
